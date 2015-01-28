@@ -17,7 +17,8 @@
         "php": ">=5.3.3",
         "symfony/framework-bundle": "~2.4",
         "scandio/troba": "dev-master",
-        "siklol/troba-user-bundle": "dev-master"
+        "siklol/troba-user-bundle": "dev-master",
+        "facebook/php-sdk-v4" : "4.0.*"
     },
 
     "autoload": {
