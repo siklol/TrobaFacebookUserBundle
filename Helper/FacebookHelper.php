@@ -12,6 +12,7 @@ namespace SikIndustries\Bundles\FacebookBundle\Helper;
 use Facebook\FacebookRedirectLoginHelper;
 use Facebook\FacebookRequest;
 use Facebook\GraphObject;
+use SikIndustries\Bundles\FacebookBundle\Events\PreUserCreationEvent;
 use SikIndustries\Bundles\TrobaUserBundle\Entity\User;
 use SikIndustries\Bundles\TrobaUserBundle\Manager\UserManager;
 use SikIndustries\Bundles\TrobaUserBundle\Salt\UserSalter;
@@ -127,6 +128,8 @@ class FacebookHelper
             $user->setPassword($this->userManager->password($user));
             $user->setEmail($graphObject->getProperty('email'));
 
+            $event = new PreUserCreationEvent($user, $graphObject);
+            $this->eventDispatcher->dispatch('facebook.create_user', $event);
             $user->save();
         }
 
