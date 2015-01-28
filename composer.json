@@ -1,0 +1,30 @@
+{
+    "name": "siklol/troba-facebook-user-bundle",
+    "type": "symfony-bundle",
+    "description": "Facebook User Bundle for troba and symfony2",
+    "keywords": ["users", "login", "troba", "facebook", "bridge", "symfony2", "bundle", "scandio"],
+    "homepage": "https://github.com/siklol/TrobaFacebookUserBundle",
+    "license": "MIT",
+
+    "authors": [
+        {
+            "name": "Veit Osiander",
+            "homepage": "https://github.com/siklol"
+        }
+    ],
+
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/framework-bundle": "~2.4",
+        "scandio/troba": "dev-master",
+        "scandio/troba-user-bundle"
+    },
+
+    "autoload": {
+        "psr-0": {
+            "SikIndustries\\Bundles\\FacebookBundle": ""
+        }
+    },
+
+    "target-dir": "SikIndustries/Bundles/FacebookBundle"
+}

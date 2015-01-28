@@ -1,0 +1,40 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <!--
+    <services>
+        <service id="sik_industries_bundles_facebook.example" class="SikIndustries\Bundles\FacebookBundle\Example">
+            <argument type="service" id="service_id" />
+            <argument>plain_value</argument>
+            <argument>%parameter_name%</argument>
+        </service>
+    </services>
+    -->
+
+    <parameters>
+        <parameter key="facebook.helper.class">SikIndustries\Bundles\FacebookBundle\Helper\FacebookHelper</parameter>
+        <parameter key="listener.facebook_session_kernel.class">SikIndustries\Bundles\FacebookBundle\Listener\FacebookSessionListener</parameter>
+    </parameters>
+
+    <services>
+        <service id="facebook.helper" class="%facebook.helper.class%" scope="request">
+            <argument>%facebook_login_callback_path%</argument>
+            <argument type="service" id="router"/>
+            <argument type="service" id="sik_industries.user_provider"/>
+            <argument type="service" id="sik_industries.user_manager"/>
+            <argument type="service" id="security.context"/>
+            <argument type="service" id="request"/>
+            <argument type="service" id="event_dispatcher"/>
+        </service>
+
+        <service id="listener.facebook_session_kernel" class="%listener.facebook_session_kernel.class%" scope="request">
+            <argument>%facebook_app_id%</argument>
+            <argument>%facebook_app_secret%</argument>
+
+            <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest" />
+        </service>
+    </services>
+</container>
