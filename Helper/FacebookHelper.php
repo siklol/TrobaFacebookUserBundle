@@ -61,8 +61,12 @@ class FacebookHelper
      */
     protected $eventDispatcher;
 
+    protected $facebookRoles;
+
     public function __construct($loginCallbackPath, Router $router, UserProviderInterface $userProvider, UserManager $userManager,
-                                SecurityContextInterface $context, Request $request, EventDispatcherInterface $eventDispatcher)
+                                SecurityContextInterface $context, Request $request, EventDispatcherInterface $eventDispatcher,
+                                $facebookRoles = 'ROLE_FACEBOOK'
+    )
     {
         $this->redirectLoginHelper = new FacebookRedirectLoginHelper($router->generate($loginCallbackPath, [], true));
         $this->router = $router;
@@ -71,6 +75,7 @@ class FacebookHelper
         $this->context = $context;
         $this->request = $request;
         $this->eventDispatcher = $eventDispatcher;
+        $this->facebookRoles = explode('|', $facebookRoles);
     }
 
     /**
@@ -134,7 +139,8 @@ class FacebookHelper
     public function loginUser(User $user)
     {
         $user = $this->userProvider->loadUserByUsername($user->getUsername());
-        $token = new UsernamePasswordToken($user, null, "sik_industries.user_provider", $user->getRoles());
+        $roles = array_merge($this->facebookRoles, $user->getRoles()); // TODO Make Facebook Role dynamic
+        $token = new UsernamePasswordToken($user, null, "sik_industries.user_provider", $roles);
         $this->context->setToken($token); //now the user is logged in
 
         //now dispatch the login event

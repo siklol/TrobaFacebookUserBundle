@@ -15,6 +15,7 @@
     -->
 
     <parameters>
+        <parameter key="facebook_roles">ROLE_FACEBOOK</parameter>
         <parameter key="facebook.helper.class">SikIndustries\Bundles\FacebookBundle\Helper\FacebookHelper</parameter>
         <parameter key="listener.facebook_session_kernel.class">SikIndustries\Bundles\FacebookBundle\Listener\FacebookSessionListener</parameter>
     </parameters>
@@ -28,6 +29,7 @@
             <argument type="service" id="security.context"/>
             <argument type="service" id="request"/>
             <argument type="service" id="event_dispatcher"/>
+            <argument>%facebook_roles%</argument>
         </service>
 
         <service id="listener.facebook_session_kernel" class="%listener.facebook_session_kernel.class%" scope="request">
