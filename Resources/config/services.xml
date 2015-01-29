@@ -35,6 +35,7 @@
         <service id="listener.facebook_session_kernel" class="%listener.facebook_session_kernel.class%" scope="request">
             <argument>%facebook_app_id%</argument>
             <argument>%facebook_app_secret%</argument>
+            <argument type="service" id="session"></argument>
 
             <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest" />
         </service>
